@@ -13,6 +13,7 @@ def main():
 ......755.
 ...$.*....
 .664.598.."""
+
 	with open("./input.txt","r") as fs:
 		data = fs.read()
 
