@@ -13,14 +13,16 @@ def main():
 ......755.
 ...$.*....
 .664.598.."""
-	with open("./input.txt","r") as fs:
-		data = fs.read()
+	# with open("./input.txt","r") as fs:
+	# 	data = fs.read()
 
 	datalines = data.split("\n")
 
 	symbols = list(dict.fromkeys(re.sub(r"[0-9\.\n]","",data)))
 
-	symreg = r"[\*]"
+	print(f"We need to look at {'\\'.join(symbols)}")
+
+	symreg = r"[\*\#\%\=\-\/\+\$\@\&]"
 
 	# extract symbol spots in the array
 
@@ -39,7 +41,6 @@ def main():
 	sepdatalines = [list(x) for x in datalines]
 
 
-
 	# make numbers into ints in list
 
 	for i,line in enumerate(datalines):
@@ -47,13 +48,16 @@ def main():
 			search = re.search(r"[0-9]+", line)
 			span = search.span()
 			match = search.group()
-			
+			print(match)
+
 			length = span[1]-span[0]
 
 			for j in range(length):
 				sepdatalines[i][span[0]+j] = int(match)
 
 			line = line[:span[0]] + "".join(["." for _ in range(length)]) + line[span[1]:]
+			print(length)
+			print(line)
 
 
 	# Search pattern
@@ -64,7 +68,7 @@ def main():
 	total_numbers = []
 
 	for spot in symbolspots:
-		spot_nums = []
+
 		tl = sepdatalines[spot[0]-1][spot[1]-1]
 		tm = sepdatalines[spot[0]-1][spot[1]]
 		tr = sepdatalines[spot[0]-1][spot[1]+1]
@@ -80,13 +84,8 @@ def main():
 		search = [tl,tm,tr,ml,mm,mr,bl,bm,br]
 
 		for thing in search:
-			if type(thing) == int and (len(spot_nums) <= 0 or spot_nums[-1] != thing ):
-				spot_nums.append(thing)
-
-		# Gear is adjacent to EXACTLY 2 parts
-
-		if len(spot_nums) == 2:
-			total_numbers.append(spot_nums[0]*spot_nums[1])
+			if type(thing) == int and (len(total_numbers) <= 0 or total_numbers[-1] != thing ):
+				total_numbers.append(thing)
 
 		print(search)
 
