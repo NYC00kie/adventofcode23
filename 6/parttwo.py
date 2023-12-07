@@ -9,21 +9,18 @@ Distance:  9  40  200"""
 		data = fs.read()
 
 	lines = data.split("\n")
-	Times = [int(num) for num in lines[0].strip("Time:").split(" ") if num != ""]
-	Distances = [int(num) for num in lines[1].strip("Distance:").split(" ") if num != ""]
-	print(Times)
-	print(Distances)
-	tots = []
-	for i in range(len(Times)):
-		time = Times[i]
-		possiblebuttonpresstime = []
-		for j in range(time):
-			distance = j * (time-j)
-			if distance > Distances[i]:
-				possiblebuttonpresstime.append(j)
-		tots.append(len(possiblebuttonpresstime))
+	time = int("".join([num for num in lines[0].strip("Time:").split(" ") if num != ""]))
+	Distance = int("".join([num for num in lines[1].strip("Distance:").split(" ") if num != ""]))
+	print(time)
+	print(Distance)
 
-	print(math.prod(tots))
+	possiblebuttonpresstime = []
+	for j in range(time):
+		distance = j * (time-j)
+		if distance > Distance:
+			possiblebuttonpresstime.append(j)
+
+	print(len(possiblebuttonpresstime))
 
 if __name__ == '__main__':
 	main()
