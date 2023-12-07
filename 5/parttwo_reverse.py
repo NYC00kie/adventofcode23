@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy, random, re
+import scipy, random, re, threading
 
 def convert_reverse(num,info):
 
@@ -19,6 +19,21 @@ def convert_reverse(num,info):
 
 			
 	return num;
+
+def check(seeds,revmaps,numrange):
+	for location in range(numrange[0],numrange[1]):
+		teed = location
+		if location % 100000 == 0:
+			print(location)
+
+		for part in revmaps:
+			teed = convert_reverse(teed,part["info"])
+
+		for seedrange in seeds:
+			if teed in seedrange:
+				print("ALARM ",teed," wird ",location)
+				exit()
+
 
 def main():
 	data = """seeds: 79 14 55 13
@@ -68,19 +83,16 @@ humidity-to-location map:
 
 	print(revmaps)
 	# increase range if no result is returned
-	for location in range(100000000):
-		teed = location
-		if location % 100000 == 0:
-			print(location)
 
-		for part in revmaps:
-			teed = convert_reverse(teed,part["info"])
+	threadnum = 3
+	threads = []
+	for i in range(threadnum):
+		t = threading.Thread(target=check, args=(seeds,revmaps,[i*8000000,(i+1)*8000000],))
+		t.start()
+		threads.append(t)
 
-		for seedrange in seeds:
-			if teed in seedrange:
-				print("ALARM ",teed," wird ",location)
-				return;
-
+	for thread in threads:
+		thread.join()
 
 if __name__ == '__main__':
 	main()
