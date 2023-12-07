@@ -14,25 +14,32 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11"""
 
 	lines = data.split("\n")
 
+	lines = [{"data":line, "amount":1} for line in lines]
+
+	print(lines)
+
 	total = 0
 
-	for card in lines:
-		cardnum = card.split(": ")[0].split(" ")[1]
-		cardgameinfo = card.split(": ")[1]
+	i = 0
+	while i < len(lines):
+		print(i)
+		cardnum = lines[i]["data"].split(": ")[0].split(" ")[1]
+		cardgameinfo = lines[i]["data"].split(": ")[1]
 
 		winningnums = [num for num in cardgameinfo.split(" | ")[0].split(" ") if num != ""]
 		gamenums = [num for num in cardgameinfo.split(" | ")[1].split(" ") if num != ""]
 
 		winnumsingame = [num for num in winningnums if num in gamenums]
 
-		parttot = 0
-		
-		if len(winnumsingame) > 0:
-			parttot += 1
-			for i in range(len(winnumsingame)-1):
-				parttot *= 2
+		for j in range(len(winnumsingame)):
+			lines[i+j+1]["amount"] += lines[i]["amount"]
 
-		total += parttot
+		i += 1
+
+	print(lines)
+
+	for card in lines:
+		total += card["amount"]
 
 	print(total)
 
