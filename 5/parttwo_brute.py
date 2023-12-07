@@ -61,19 +61,27 @@ humidity-to-location map:
 	sections = data.split("\n\n")
 
 	seeds = [int(num) for num in sections[0].strip("seeds: ").split(" ")]
-	print(seeds)
+	seeds = [range(seeds[i],seeds[i]+seeds[i+1]) for i in range(0,len(seeds),2)]
+
 	maps = [{"name" : part.split("\n")[0], "info" : [[int(num) for num in nums.split(" ")] for nums in part.split("\n")[1:]]} for part in sections[1:]]
 
 	for mappe in maps:
 		mappe["func"] = convert
 
-	for i in range(len(seeds)):
-		print(i)
-		for part in maps:
-			print(part["name"])
-			seeds[i] = part["func"](seeds[i],part["info"])
+	minseed = 100000000000000000000000000000
+	for seedrange in seeds:
+		print(seedrange)
+		for seed in seedrange:
+			teed = seed
+			for part in maps:
+				teed = part["func"](teed,part["info"])
+			
+				
 
-	print(min(seeds))
+			if teed < minseed :
+					minseed = teed
+
+	print(minseed)
 
 if __name__ == '__main__':
 	main()

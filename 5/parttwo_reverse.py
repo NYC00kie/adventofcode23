@@ -2,8 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy, random, re
 
-
-def convert(num,info):
+def convert_reverse(num,info):
 
 	#
 	# num should be the seed number.
@@ -15,8 +14,8 @@ def convert(num,info):
 
 	for lines in info:
 #		print(f"number: {num} from {lines[1]} ({list(range(lines[1],lines[1]+lines[2]))}), to {lines[0]} ({list(range(lines[0],lines[0]+lines[2]))}) ")
-		if num in range(lines[1],lines[1]+lines[2]):
-			return num + (lines[0]-lines[1])
+		if num in range(lines[0],lines[0]+lines[2]):
+			return num + (lines[1]-lines[0])
 
 			
 	return num;
@@ -61,19 +60,27 @@ humidity-to-location map:
 	sections = data.split("\n\n")
 
 	seeds = [int(num) for num in sections[0].strip("seeds: ").split(" ")]
-	print(seeds)
+	seeds = [range(seeds[i],seeds[i]+seeds[i+1]) for i in range(0,len(seeds),2)]
+
 	maps = [{"name" : part.split("\n")[0], "info" : [[int(num) for num in nums.split(" ")] for nums in part.split("\n")[1:]]} for part in sections[1:]]
 
-	for mappe in maps:
-		mappe["func"] = convert
+	revmaps = maps[::-1]
 
-	for i in range(len(seeds)):
-		print(i)
-		for part in maps:
-			print(part["name"])
-			seeds[i] = part["func"](seeds[i],part["info"])
+	print(revmaps)
+	# increase range if no result is returned
+	for location in range(100000000):
+		teed = location
+		if location % 100000 == 0:
+			print(location)
 
-	print(min(seeds))
+		for part in revmaps:
+			teed = convert_reverse(teed,part["info"])
+
+		for seedrange in seeds:
+			if teed in seedrange:
+				print("ALARM ",teed," wird ",location)
+				return;
+
 
 if __name__ == '__main__':
 	main()
