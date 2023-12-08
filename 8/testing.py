@@ -54,32 +54,7 @@ XXX = (XXX, XXX)"""
 
 	lengths = []
 
-	for loc in locations:
-		print(loc)
-		location = loc
-		i = 0
-		location = lettmap[location][instructions[i%len(instructions)]]
-		print(location)
-		i += 1
-		# findet keine wiederholung
-		while location[-1] != "Z":
-			location = lettmap[location][instructions[i%len(instructions)]]
-
-			# :3
-
-			i += 1
-
-		lengths.append(i)
-		print(i)
-
-	print(lengths)
-
-	res = 1
-
-	for i in lengths:
-		res = compute_lcm(res,i)
-	
-	print(res)
+	print(lettmap["ZZZ"][instructions[16697%len(instructions)]])
 
 if __name__ == '__main__':
 	main()
