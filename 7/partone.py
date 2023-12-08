@@ -15,7 +15,7 @@ QQQJA 483"""
 		data = fs.read()
 
 #	A, K, Q, J, T, 9, 8, 7, 6, 5, 4, 3, 2
-	rang = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
+	rang = ['J', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'Q', 'K', 'A']
 #	7 Five of a kind, where all five cards have the same label: AAAAA
 #	6 Four of a kind, where four cards have the same label and one card has a different label: AA8AA
 #	5 Full house, where three cards have the same label, and the remaining two cards share a different label: 23332
@@ -25,7 +25,7 @@ QQQJA 483"""
 #	1 High card, where all cards' labels are distinct: 23456
 
 
-# IDEA: restructure the data into intigers, so that each individual hand gets its own number (base 16).
+# IDEA: restructure the data into integers, so that each individual hand gets its own number (base 16).
 # The places 0 - 5 (F00000, the 0) belong to the Cards itself and just get mapped by the standing of each card.
 # the 6. place gets decided by the type of hand, four of a kind, full house, and so on.
 # this creates a base 16 number thats unique for each unique hand and which will result in a unique decimal number once converted.
