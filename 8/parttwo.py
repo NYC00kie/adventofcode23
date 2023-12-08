@@ -19,5 +19,12 @@ ZZZ = (ZZZ, ZZZ)"""
 		data = fs.read()
 
 	instructions = data.split("\n\n")[0]
+
+
+
+
+
+
+	
 if __name__ == '__main__':
 	main()
