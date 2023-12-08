@@ -15,7 +15,7 @@ QQQJA 483"""
 		data = fs.read()
 
 #	A, K, Q, J, T, 9, 8, 7, 6, 5, 4, 3, 2
-	rang = ['J', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'Q', 'K', 'A']
+	rang = ['2', '3', '4', '5', '6', '7', '8', '9', 'T','J', 'Q', 'K', 'A']
 #	7 Five of a kind, where all five cards have the same label: AAAAA
 #	6 Four of a kind, where four cards have the same label and one card has a different label: AA8AA
 #	5 Full house, where three cards have the same label, and the remaining two cards share a different label: 23332
